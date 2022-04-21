@@ -86,27 +86,34 @@ const tasks = [
 ];
 ///const moment = require('moment')
 
-function problem4(e){
-    let a = 8
-    let b = 9
-    let c = 4
+function problem4(etype,e){
+    let type_time = []
+    for(i = 0 ; i < etype.length ; i++){
+       startt = etype[i].work_begin.split(":")
+       end = etype[i].work_end.split(':')
+       var startDate = new Date(0,0,0,0,startt[0],startt[1],startt[2]);
+       var endDate = new Date(0,0,0,0,end[0],end[1],end[2]);
+       var diff = endDate.getTime()-startDate.getTime()
+       var hour = Math.floor(diff/1000/60)
+       if (hour<0){
+           hour = 24+hour
+       }
+       type_time[i] = hour
+    }
     let total = 0
-    for(i = 0;i<employees.length;i++){
-        if (employees[i].type==1){
-            total = total + a
-        }
-        if (employees[i].type==2){
-            total = total + b
-        }
-        if (employees[i].type==3){
-            total = total + c
-        }
+    
+    for(i = 0;i<e.length;i++){
+        let num = e[i].type
+        ///console.log(num)
+        ///console.log(type_time[num])
+        total = type_time[num-1] + total
+        
     }
    
     console.log(total)
     return total
 }
-let num = problem4(employees)
+let num = problem4(employeeType,employees)
 
 
 const howManyEmployeeByTime = (dateTime) => {
